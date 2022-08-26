@@ -45,4 +45,19 @@ public class ProductRepository {
     public PurchaseItem[] getItems() {
         return items;
     }
+
+    public void add(PurchaseItem item) {
+        if (items.length == 0) {
+            save(item);
+        } else {
+            for (PurchaseItem itemOrigin : items) {
+                if (itemOrigin.getId() == item.getId()) {
+                    AlreadyExistsException s = new AlreadyExistsException("Element with id" + item.getId() + "is already exists");
+                    throw s;
+                } else {
+                    save(item);
+                }
+            }
+        }
+    }
 }
